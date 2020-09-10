@@ -1,5 +1,7 @@
 package org.sample
 
+import java.util.regex.Pattern
+
 fun String.replace(oldChar: Char, newChar: Char, ignoreCase: Boolean = false): String {
     // prefer case-insensitive platform implementation
     if (!ignoreCase) return (this as java.lang.String).replace(oldChar, newChar)
@@ -11,7 +13,7 @@ fun String.replace(oldChar: Char, newChar: Char, ignoreCase: Boolean = false): S
     }
 }
 
-fun String.replace(oldValue: String, newValue: String, ignoreCase: Boolean = false): String? {
+fun String.replace(oldValue: String, newValue: String, ignoreCase: Boolean = false): String {
     // prefer case-insensitive platform implementation
     if (!ignoreCase) return (this as java.lang.String).replace(oldValue, newValue)
 
@@ -34,3 +36,7 @@ fun String.replace(oldValue: String, newValue: String, ignoreCase: Boolean = fal
     } while (occurrenceIndex > 0)
     return stringBuilder.append(this, i, length).toString()
 }
+
+fun String.replaceRegex(oldValue: String, newValue: String, ignoreCase: Boolean = false): String =
+        if (ignoreCase) Pattern.compile(Pattern.quote(oldValue), Pattern.CASE_INSENSITIVE).matcher(this).replaceAll(newValue)
+        else (this as java.lang.String).replace(oldValue, newValue)
