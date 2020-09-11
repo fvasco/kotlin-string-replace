@@ -18,23 +18,22 @@ public class MyBenchmark {
 
     private static final String newValue = "0123456";
 
-    private static final boolean ignoreCase = true;
+    private static final boolean ignoreCase = false;
 
     @Benchmark
     public void replaceOriginal(Blackhole hole) {
-        hole.consume(StringsKt.replace(base, "a", "1", true));
+        hole.consume(StringsKt.replace(base, oldValue, newValue, ignoreCase));
     }
 
     @Benchmark
     public void replaceNew(Blackhole hole) {
-        hole.consume(MyBenchmarkKt.replace(base, "a", "1", true));
+        hole.consume(MyBenchmarkKt.replace(base, oldValue, newValue, ignoreCase));
     }
 
     @Benchmark
     public void replaceRegex(Blackhole hole) {
-        hole.consume(MyBenchmarkKt.replaceRegex(base, "a", "1", true));
+        hole.consume(MyBenchmarkKt.replaceRegex(base, oldValue, newValue, ignoreCase));
     }
-
 
     public static void main(String[] args) {
         System.out.println(StringsKt.replace("ABC AABABCDAB ABCDABCDABDE", "", "x", true));
